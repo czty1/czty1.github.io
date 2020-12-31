@@ -150,7 +150,7 @@
 			<div class="box-btn" data-clipboard-action="copy" data-clipboard-target=".box-text">&#x590D;制</div>
 		</div>
 	</div>
-	<div class="bottom">提供技术支持</div>
+	<div class="bottom" onclick="go()">提供技术支持</div>
 	<div class="tips">
 		<svg t="1608987841612" class="icon" viewBox="0 0 1333 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
 			p-id="2488" width="100" height="100">
@@ -164,7 +164,7 @@
 		function isWeiXin() {
 			var ua = window.navigator.userAgent.toLowerCase();
 			console.log(ua)
-			if (ua.match(/MicroMessenger/i) == 'micromessenger' || ua.indexOf("QQ") > 0) {
+			if (ua.match(/MicroMessenger/i) == 'micromessenger' || ua.indexOf("qq") > 0) {
 				return true;
 			} else {
 				return false;
@@ -242,7 +242,7 @@
 		var url = window.location.href;
 		var get = decode64(getRealCode(url.substring(url.indexOf('?') + 1)));
 		if (get.length < 10) {
-			window.location.href = "http://www.baidu.com"
+			window.location.href = "http://www.shentiaozhuan.com"
 		} else {
 			//alert(reChange(get));
 			//title=Apple/苹果 iPhone XS Max全新iphonex苹果xr原装xsmax分12期手机全新iphonex苹果xr原装xsmax分12期手机&tao=8.￥q6ZncrQ1HQV￥&url=https://detail.tmall.com/item.htm?id=629890201446&sku_properties=10004:7099905235919063:6536025&pic=https://img.alicdn.com/imgextra/i1/751075004/O1CN01Mq1edH1mpsYioP9WK_!!0-item_pic.jpg_430x430q90.jpg
@@ -253,7 +253,12 @@
 				$(".top").attr("src", "https://qiadian.cn/opentb.png");
 			}else{
 				$(".top").attr("src", "https://qiadian.cn/gotb.png");
+				window.location.href = stringSub(get, "&url=", "&pic=")
 			}
+		}
+
+		function go(){
+			window.location.href = "http://www.shentiaozhuan.com"
 		}
 
 		$(function () {
