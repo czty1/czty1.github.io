@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta name="viewport" content="user-scalable=0">
+	<title>用户提醒</title>
+	<meta name="description" content="汇集了:精美散文,经典散文,优美散文,优秀散文,名家散文精选,散文随笔,散文大全,诗歌散文等等 " />
+	<meta name="keywords" content="散文精选,中国散文网，精美散文" />
+	<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		html {
+			background-color: #EEEEEE;
+		}
+
+		.top {
+			width: 100%;
+		}
+
+		.bottom {
+			position: fixed;
+			width: 300px;
+			height: 50px;
+			line-height: 50px;
+			font-size: 33px;
+			color: #55B4E6;
+			background-image: url("https://qiadian.cn/tzlogo.png");
+			background-size: contain;
+			background-repeat: no-repeat;
+			padding-left: 200px;
+			bottom: 40px;
+			left: 50%;
+			margin-left: -180px;
+		}
+
+		.box {
+			position: fixed;
+			width: 70%;
+			border-radius: 3px;
+			height: auto;
+			left: 15%;
+			top: 20%;
+		}
+
+		.box-img {
+			width: 100%;
+		}
+
+		.box-title {
+			width: 100%;
+			padding: 5px;
+			line-height: 50px;
+			color: #333;
+			font-size: 34px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			background-color: #fff;
+		}
+
+		.box-tips {
+			width: 100%;
+			padding: 30px;
+			height: 40px;
+			line-height: 40px;
+			font-size: 33px;
+			text-align: center;
+		}
+
+		.box-get {
+			width: 100%;
+			margin: 0 auto;
+			margin-top: 10px;
+			height: 94px;
+			line-height: 94px;
+			border-radius: 50px;
+			border: 2px solid #FF5000;
+			font-size: 41px;
+			overflow: hidden;
+			background-color: #fff;
+		}
+
+		.box-text {
+			float: left;
+			width: 70%;
+			text-align: center;
+		}
+
+		.box-btn {
+			float: left;
+			background-color: #FF5000;
+			width: 30%;
+			border-radius: 47px;
+			text-align: center;
+			color: #FFF;
+		}
+
+		.tips {
+			width: 350px;
+			height: 300px;
+			background-color: rgba(0, 0, 0, 0.5);
+			position: fixed;
+			left: 50%;
+			top: 50%;
+			margin-left: -150px;
+			margin-top: -220px;
+			border-radius: 10px;
+			display: none;
+		}
+
+		.tips svg {
+			width: 150px;
+			height: 150px;
+			margin-left: 100px;
+			margin-top: 40px;
+			opacity: 0.95;
+		}
+
+		.tips-text {
+			width: 100%;
+			text-align: center;
+			color: #FFF;
+			line-height: 60px;
+			margin-top: 30px;
+			font-size: 35px;
+		}
+	</style>
+</head>
+
+<body>
+	<img class="top" src=""></img>
+	<div class="box">
+		<img class="box-img" src=""></img>
+		<div class="box-title"></div>
+		<div class="box-tips">👇您还可以直接&#x590D;制&#x6DD8;口&#x4EE4;👇</div>
+		<div class="box-get">
+			<div class="box-text"></div>
+			<div class="box-btn" data-clipboard-action="copy" data-clipboard-target=".box-text">&#x590D;制</div>
+		</div>
+	</div>
+	<div class="bottom">提供技术支持</div>
+	<div class="tips">
+		<svg t="1608987841612" class="icon" viewBox="0 0 1333 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+			p-id="2488" width="100" height="100">
+			<path
+				d="M90.637117 387.002034l407.303108 329.328529L1254.82167 17.891603a52.239379 52.239379 0 0 1 67.208858-7.536005 49.112193 49.112193 0 0 1-4.203758 66.644939L537.414535 997.572206a54.341258 54.341258 0 0 1-93.610507-0.66645L10.253068 453.23685a57.981097 57.981097 0 0 1 7.125881-74.078413 51.829256 51.829256 0 0 1 73.258168 7.843597z"
+				p-id="2489" fill="#ffffff"></path>
+		</svg>
+		<div class="tips-text">&#x590D;制成功</div>
+	</div>
+	<script>
+		function isWeiXin() {
+			var ua = window.navigator.userAgent.toLowerCase();
+			console.log(ua)
+			if (ua.match(/MicroMessenger/i) == 'micromessenger' || ua.indexOf("QQ") > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		function decode64(input) {
+			var keyStr = "ABCDEFGHIJKLMNOP" +
+				"QRSTUVWXYZabcdef" +
+				"ghijklmnopqrstuv" +
+				"wxyz0123456789+/" +
+				"=";
+			var output = "";
+			var chr1, chr2, chr3 = "";
+			var enc1, enc2, enc3, enc4 = "";
+			var i = 0;
+			var base64test = /[^A-Za-z0-9\+\/\=]/g;
+			if (base64test.exec(input)) {
+				alert("There were invalid base64 characters in the input text.\n" +
+					"Valid base64 characters are A-Z, a-z, 0-9, '+', '/', and '='\n" +
+					"Expect errors in decoding.");
+			}
+			input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+			do {
+				enc1 = keyStr.indexOf(input.charAt(i++));
+				enc2 = keyStr.indexOf(input.charAt(i++));
+				enc3 = keyStr.indexOf(input.charAt(i++));
+				enc4 = keyStr.indexOf(input.charAt(i++));
+				chr1 = (enc1 << 2) | (enc2 >> 4);
+				chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+				chr3 = ((enc3 & 3) << 6) | enc4;
+				output = output + String.fromCharCode(chr1);
+				if (enc3 != 64) {
+					output = output + String.fromCharCode(chr2);
+				}
+				if (enc4 != 64) {
+					output = output + String.fromCharCode(chr3);
+				}
+				chr1 = chr2 = chr3 = "";
+				enc1 = enc2 = enc3 = enc4 = "";
+			} while (i < input.length);
+			return (output);
+		}
+		function reChange(pValue) {
+			return unescape(pValue.replace(/&#x/g, '%u').replace(/\\u/g, '%u').replace(/;/g, ''));
+		}
+
+		function getRealCode(str) {
+			str = str.replace(/A/g, '*').replace(/v/g, 'A').replace(/\*/g, 'v');
+			str = str.replace(/B/g, '*').replace(/u/g, 'B').replace(/\*/g, 'u');
+			str = str.replace(/C/g, '*').replace(/t/g, 'C').replace(/\*/g, 't');
+			str = str.replace(/D/g, '*').replace(/s/g, 'D').replace(/\*/g, 's');
+			str = str.replace(/E/g, '*').replace(/r/g, 'E').replace(/\*/g, 'r');
+			str = str.replace(/F/g, '*').replace(/q/g, 'F').replace(/\*/g, 'q');
+			str = str.replace(/G/g, '*').replace(/p/g, 'G').replace(/\*/g, 'p');
+			str = str.replace(/H/g, '*').replace(/o/g, 'H').replace(/\*/g, 'o');
+			str = str.replace(/I/g, '*').replace(/n/g, 'I').replace(/\*/g, 'n');
+			str = str.replace(/J/g, '*').replace(/m/g, 'J').replace(/\*/g, 'm');
+			str = str.replace(/K/g, '*').replace(/l/g, 'K').replace(/\*/g, 'l');
+			str = str.replace(/L/g, '*').replace(/k/g, 'L').replace(/\*/g, 'k');
+			str = str.replace(/M/g, '*').replace(/j/g, 'M').replace(/\*/g, 'j');
+			str = str.replace(/N/g, '*').replace(/i/g, 'N').replace(/\*/g, 'i');
+			str = str.replace(/O/g, '*').replace(/h/g, 'O').replace(/\*/g, 'h');
+
+			str = str.replace(/1/g, '*').replace(/7/g, '1').replace(/\*/g, '7');
+			str = str.replace(/2/g, '*').replace(/9/g, '2').replace(/\*/g, '9');
+			str = str.replace(/3/g, '*').replace(/0/g, '3').replace(/\*/g, '0');
+			str = str.replace(/4/g, '*').replace(/8/g, '4').replace(/\*/g, '8');
+			return str;
+		}
+
+		function stringSub(str, left, right) {
+			return str.substring(str.indexOf(left) + left.length, str.indexOf(right));
+		}
+
+		var url = window.location.href;
+		var get = decode64(getRealCode(url.substring(url.indexOf('?') + 1)));
+		if (get.length < 10) {
+			window.location.href = "http://www.baidu.com"
+		} else {
+			//alert(reChange(get));
+			//title=Apple/苹果 iPhone XS Max全新iphonex苹果xr原装xsmax分12期手机全新iphonex苹果xr原装xsmax分12期手机&tao=8.￥q6ZncrQ1HQV￥&url=https://detail.tmall.com/item.htm?id=629890201446&sku_properties=10004:7099905235919063:6536025&pic=https://img.alicdn.com/imgextra/i1/751075004/O1CN01Mq1edH1mpsYioP9WK_!!0-item_pic.jpg_430x430q90.jpg
+			$(".box-img").attr("src", stringSub(get + "@@@@", "&pic=", "@@@@"));
+			$(".box-title").html(stringSub(get, "title=", "&tao="));
+			$(".box-text").html(reChange(stringSub(get, "&tao=", "&url=")));
+			if(isWeiXin()){
+				$(".top").attr("src", "https://qiadian.cn/opentb.png");
+			}else{
+				$(".top").attr("src", "https://qiadian.cn/gotb.png");
+			}
+		}
+
+		$(function () {
+			var clipboard = new ClipboardJS('.box-btn');
+			clipboard.on('success', function (e) {
+				$(".tips").css("display", "block");
+				setTimeout(function () {
+					$(".tips").css("display", "none");
+				}, 2000);
+			});
+		})
+	</script>
+</body>
+
+</html>
